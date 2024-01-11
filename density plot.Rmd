@@ -1,0 +1,55 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+## Density term
+in statistics density is like looking at how values are spread out in a bunch of number it helps us see which numbers are more likely to show up and how likely they are, it also show the shape of the data indicating where values are concentrated, peaks in the plot represent areas in the data where data is most dense(more likely), it is a visual way to grasp the probability of different values occuring within the dataset
+## Adding density plot
+to add a density plot with ggplot you need
+1. the x, which should be contineous
+
+```{r}
+library(ggplot2)
+diamonds |> ggplot(aes(x = depth)) + geom_density()
+```
+## Adding color to the path drawn
+to add the color to the path drawn alone, add the color argument in the geom_density funtion, NOT INSIDE THE AES FUNCTION
+```{r}
+diamonds |> ggplot(aes(x = depth)) + geom_density(color = "blue")
+```
+## Adding fill
+to add the fill color inside the path drawn, add the fill argument in the geom_density function, NOT INSIDE THE AES FUNCTION
+```{r}
+diamonds |> ggplot(aes(x = depth)) + geom_density(color = "blue", fill = "lightblue")
+```
+## Adding alpha (opacity)
+to add the alpha which is how intense the color the look, add the 'alpha' argument inside the geom_density function 'NOT THE AES FUNCTION'
+```{r}
+diamonds |> ggplot(aes(x = depth)) + geom_density(color = "blue", fill = "darkgreen", alpha = .2)
+```
+## Adding multiple density plot based on a second var
+to add multiple density plot based on another variable pass the variable to the colour argument **IN THE AES() FUNCTION**
+```{r}
+diamonds |> ggplot(aes(x = depth)) + geom_density(aes(color = cut))
+```
+## Adding color to all density
+same way to fill them map the variable to fill **IN THE AES() FUNCTION**
+
+```{r}
+diamonds |> ggplot(aes(x = depth)) + geom_density(aes(color = cut, fill = cut))
+```
+## Adding alpha to every density
+to do this you only need to map the color variable to the alpha too **IN THE AES() FUNCTION**
+```{r}
+diamonds |> ggplot(aes(x = depth)) + geom_density(aes(fill = cut, alpha = cut)) + coord_cartesian(xlim = c(60, 65), ylim = c(0,.7)) + theme_void()
+```
+```{r}
+pchisq(q = 0:20, df = 7) -> chi
+d <- data.frame(x = chi)
+d |> ggplot(aes(x)) + geom_density(fill = 'lightblue')
+```
+
+
+
+
+

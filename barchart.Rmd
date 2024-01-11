@@ -1,0 +1,73 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+## Bar Chart term
+Bar chart are effective for visualizing and comparing data across different categories, here the height of each bar is proportional to the value or frequency it represents
+
+## Drawing a bar chart
+to draw a bar chart you will need only a categorical variable given to the x aesthetics
+```{r}
+diamonds |> ggplot(aes(x = cut)) + geom_bar()
+```
+## flipping the bar chart
+to flip the bars, assign the categorical variable to y aesthetics 
+```{r}
+diamonds |> ggplot(aes(y = cut)) + geom_bar()
+```
+or similarly
+```{r}
+diamonds |> ggplot(aes(x = cut)) + geom_bar() + coord_flip()
+```
+## Adding colours(path)
+to add color to bar chart path drawn add the color argument **NOT THE AESTHETICS FUNCTION COLOR**
+```{r}
+diamonds |> ggplot(aes(x = cut)) + geom_bar(color = "blue")
+```
+## Adding colours(fill)
+to add color to bar chart filling everything with the same color, add the color argument **NOT THE AESTHETICS FUNCTION COLOR**
+```{r}
+diamonds |> ggplot(aes(x = cut)) + geom_bar(fill = "blue")
+```
+## Adding unique Colour
+to add unique color to each bar, use the fill argument **IN THE AESTHETICS FUNCTION** mapping it to a variable
+```{r}
+diamonds |> ggplot(aes(x = cut)) + geom_bar(mapping = aes(fill = cut))
+```
+## Adding unique Colour(specific)
+to add unique color to a specific bar, use scale_fill_manual function to manually add the colors, name the colors for more specificity
+**Note** you will need to add fill in the aesthetics for things to work, map the fill in the aesthetics to a variable
+```{r}
+bar_colors <- c("red","blue","black","green","brown")
+names(bar_colors) <- unique(diamonds$cut)
+diamonds |> ggplot(aes(x = cut, fill = cut)) + geom_bar() + scale_fill_manual(values = bar_colors)
+```
+## Component(stacked) bar chart
+showing proportion of groups within a group in a group
+this displays the total value while also showing the contribution of each individual subcategories.
+
+## Adding stacked bar chart
+after adding a normal bar chart add the fill to another different variable which is the groups within a particular, and set the position argument **NOT THE AES FUNCTION** and set it to position_stack() 
+we can use in sense of a progress bar
+
+if you flip the coordinate set reverse to true inside the postion_stack()
+```{r}
+diamonds |> ggplot(aes(x = cut)) + geom_bar(mapping = aes(fill = clarity), position = position_stack())
+```
+## Adding multiple barchart
+for multiple bar chart change the above bar chart(stacked), change the position argument to position_dodge
+```{r}
+diamonds |> ggplot(aes(x = cut)) + geom_bar(mapping = aes(fill = clarity), position = position_dodge())
+```
+
+
+
+
+
+
+
+
+
+
